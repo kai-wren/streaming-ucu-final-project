@@ -1,6 +1,6 @@
 package ua.ucu.edu
 
-import akka.actor.typed.Behavior
+import akka.actor.typed.{ActorSystem, Behavior, PostStop, Signal}
 import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.scaladsl.ActorContext
 import akka.actor.typed.scaladsl.AbstractBehavior
@@ -17,5 +17,13 @@ class producerAQI(context: ActorContext[String]) extends AbstractBehavior[String
         val firstRef = context.spawn(lvivAQI(), "first-actor")
         firstRef ! "getdata"
         this
+      case "stop" => Behaviors.stopped
     }
+
+  override def onSignal: PartialFunction[Signal, Behavior[String]] = {
+    case PostStop =>
+      println("second stopped")
+      this
+  }
+
 }

@@ -1,7 +1,6 @@
 package ua.ucu.edu
 
-import akka.actor.typed.ActorSystem
-import akka.actor.typed.Behavior
+import akka.actor.typed.{ActorSystem, Behavior, PostStop, Signal}
 import akka.actor.typed.scaladsl.AbstractBehavior
 import akka.actor.typed.scaladsl.ActorContext
 import akka.actor.typed.scaladsl.Behaviors
@@ -20,4 +19,10 @@ class lvivAQI(context: ActorContext[String]) extends AbstractBehavior[String] {
         aqi.get_aqi("f84d40a229949596ed1d0748a0cb6e4314b0a74c", "lviv")
         this
     }
+
+  override def onSignal: PartialFunction[Signal, Behavior[String]] = {
+    case PostStop =>
+      println("second stopped")
+      this
+  }
 }
