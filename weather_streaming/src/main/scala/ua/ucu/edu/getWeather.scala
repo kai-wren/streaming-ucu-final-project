@@ -1,5 +1,7 @@
 package ua.ucu.edu
 
+import java.io.{BufferedReader, InputStreamReader}
+
 import org.apache.http.client.methods.HttpGet
 import org.apache.http.impl.client.HttpClientBuilder
 
@@ -13,8 +15,12 @@ class WeatherAPI {
     val httpGet = new HttpGet(url)
     httpGet.setHeader("x-rapidapi-host", "climacell-microweather-v1.p.rapidapi.com")
     httpGet.setHeader("x-rapidapi-key", "acdf4fcdb9mshcc0efc0676e25b0p1458a7jsnb3d5654d7882")
+    //val response = client.execute[String](httpGet,)
     val response = client.execute(httpGet)
-    println(response)
+    val inputStream = response.getEntity.getContent
+    val inputBuffer = new BufferedReader(new InputStreamReader(inputStream))
+    val responseString = inputBuffer.readLine()
+    println(responseString)
     client.close()
   }
 }
