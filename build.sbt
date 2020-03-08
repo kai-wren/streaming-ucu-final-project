@@ -12,6 +12,7 @@ ThisBuild / scalacOptions ++= Seq(
   "-Xlint")
 
 val akkaVersion = "2.5.20"
+//val akkaVersion = "2.6.3"
 
 val commonDependencies = Seq(
   "org.apache.kafka" %% "kafka" % "2.1.0" withSources()
@@ -84,6 +85,16 @@ lazy val weather_provider = (project in file("weather-provider"))
     name := "weather-provider",
     libraryDependencies ++= commonDependencies ++ akkaDependencies ++ Seq(
       // your additional dependencies go here
+    ),
+    dockerSettings()
+  )
+
+lazy val aqi_streaming = (project in file("aqi_streaming"))
+  .enablePlugins(sbtdocker.DockerPlugin)
+  .settings(
+    name := "aqi_streaming",
+    libraryDependencies ++= commonDependencies ++ akkaDependencies ++ Seq(
+      "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion
     ),
     dockerSettings()
   )
