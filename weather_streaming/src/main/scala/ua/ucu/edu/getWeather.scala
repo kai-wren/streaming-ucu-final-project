@@ -1,0 +1,20 @@
+package ua.ucu.edu
+
+import org.apache.http.client.methods.HttpGet
+import org.apache.http.impl.client.HttpClientBuilder
+
+
+class WeatherAPI {
+  def getWeatherApi(lat: Double, log: Double): Unit = {
+    val client = HttpClientBuilder.create.build
+    val url = "https://climacell-microweather-v1.p.rapidapi.com/weather/realtime?" +
+      "unit_system=si&fields=temp,wind_speed,humidity,cloud_cover,surface_shortwave_radiation,fire_index,no2,o3,co,so2,pm25,pm10" +
+      "&lat=" + lat + "&lon=" + log
+    val httpGet = new HttpGet(url)
+    httpGet.setHeader("x-rapidapi-host", "climacell-microweather-v1.p.rapidapi.com")
+    httpGet.setHeader("x-rapidapi-key", "acdf4fcdb9mshcc0efc0676e25b0p1458a7jsnb3d5654d7882")
+    val response = client.execute(httpGet)
+    println(response)
+    client.close()
+  }
+}

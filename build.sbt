@@ -105,7 +105,19 @@ lazy val streaming_app = (project in file("streaming-app"))
     name := "streaming-app",
     libraryDependencies ++= commonDependencies ++ streamsDependencies ++ Seq(
       // your additional dependencies go here
+
     ),
     dockerSettings(),
     mainClass in assembly := Some("ua.ucu.edu.DummyStreamingApp")
+  )
+
+lazy val weather_streaming = (project in file("weather_streaming"))
+  .enablePlugins(sbtdocker.DockerPlugin)
+  .settings(
+    name := "weather_streaming",
+    libraryDependencies ++= commonDependencies ++ akkaDependencies ++ Seq(
+      "org.apache.httpcomponents" % "httpclient" % "4.5.12",
+      "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion
+    ),
+    dockerSettings()
   )
