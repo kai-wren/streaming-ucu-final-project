@@ -7,8 +7,8 @@ import org.apache.http.impl.client.HttpClientBuilder
 
 
 class WeatherAPI {
-  def getWeatherApi(lat: Double, log: Double): Unit = {
-    val client = HttpClientBuilder.create.build
+  def getWeatherApi(city: String): Unit = {
+    /*val client = HttpClientBuilder.create.build
     val url = "https://climacell-microweather-v1.p.rapidapi.com/weather/realtime?" +
       "unit_system=si&fields=temp,wind_speed,humidity,cloud_cover,surface_shortwave_radiation,fire_index,no2,o3,co,so2,pm25,pm10" +
       "&lat=" + lat + "&lon=" + log
@@ -21,6 +21,9 @@ class WeatherAPI {
     val inputBuffer = new BufferedReader(new InputStreamReader(inputStream))
     val responseString = inputBuffer.readLine()
     println(responseString)
-    client.close()
+    client.close()*/
+    val url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=04c7561284bb760addde892b62840442"
+    val result = scala.io.Source.fromURL(url).mkString
+    println(result)
   }
 }
