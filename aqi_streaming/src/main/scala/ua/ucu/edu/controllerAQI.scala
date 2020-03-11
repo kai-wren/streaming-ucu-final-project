@@ -22,12 +22,16 @@ class controllerAQI(context: ActorContext[Command]) extends AbstractBehavior[Com
   private val respondTemperatureAdapter = context.messageAdapter(Response.apply)
   private val token = "f84d40a229949596ed1d0748a0cb6e4314b0a74c"
   private val topic = "aqi-streaming"
+  private val cities = List("lviv", "kyiv", "odesa", "zaporizhzhya", "ivano-frankivsk", "dnipro", "rivne", "ternopil",
+  "chernivci", "mariupol")
 
   override def onMessage(msg: Command): Behavior[Command] =
     msg match {
       case Start() =>
-        val device = context.spawn(deviceAQI("lviv"), "lvivAQI")
-        device ! deviceAQI.ReadTemperature("lviv", token, respondTemperatureAdapter)
+        for (city <- cities) {
+          val device = context.spawn(deviceAQI(city), city + "AQI")
+          device ! deviceAQI.ReadTemperature(city, token, respondTemperatureAdapter)
+        }
         this
       case Stop() => Behaviors.stopped
       case Response(response) => onRespondTemperature(response)
