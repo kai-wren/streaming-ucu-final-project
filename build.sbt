@@ -94,7 +94,8 @@ lazy val aqi_streaming = (project in file("aqi_streaming"))
   .settings(
     name := "aqi_streaming",
     libraryDependencies ++= commonDependencies ++ akkaDependencies ++ Seq(
-      "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion
+      "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
+      "net.liftweb" %% "lift-json" % "3.4.0"
     ),
     dockerSettings()
   )
