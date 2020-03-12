@@ -117,7 +117,8 @@ lazy val weather_streaming = (project in file("weather_streaming"))
     name := "weather_streaming",
     libraryDependencies ++= commonDependencies ++ akkaDependencies ++ Seq(
       "org.apache.httpcomponents" % "httpclient" % "4.5.12",
-      "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion
+      "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
+      "net.liftweb.json.DefaultFormats"
     ),
     dockerSettings()
   )

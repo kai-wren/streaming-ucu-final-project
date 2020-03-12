@@ -1,4 +1,4 @@
-package ua.ucu.edu
+package ua.ucu.edu.weatherStreaming
 
 import akka.actor.typed.Behavior
 import akka.actor.typed.scaladsl.{AbstractBehavior, ActorContext, Behaviors}
@@ -15,7 +15,6 @@ class cityWeather(context: ActorContext[String]) extends AbstractBehavior[String
     msg match {
       case "getdata" =>
         val weather = new WeatherAPI().getWeatherApi("Lviv")
-        //aqi.get_aqi("f84d40a229949596ed1d0748a0cb6e4314b0a74c", "lviv")
         this
     }
 }

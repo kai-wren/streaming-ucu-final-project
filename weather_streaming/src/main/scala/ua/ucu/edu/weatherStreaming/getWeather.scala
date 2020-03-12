@@ -1,12 +1,8 @@
-package ua.ucu.edu
-
-import java.io.{BufferedReader, InputStreamReader}
-
-import org.apache.http.client.methods.HttpGet
-import org.apache.http.impl.client.HttpClientBuilder
+package ua.ucu.edu.weatherStreaming
 
 
 class WeatherAPI {
+    // https://openweathermap.org/current#name
   def getWeatherApi(city: String): Unit = {
     /*val client = HttpClientBuilder.create.build
     val url = "https://climacell-microweather-v1.p.rapidapi.com/weather/realtime?" +

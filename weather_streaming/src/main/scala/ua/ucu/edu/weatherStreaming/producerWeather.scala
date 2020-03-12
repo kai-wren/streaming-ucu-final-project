@@ -1,4 +1,4 @@
-package ua.ucu.edu
+package ua.ucu.edu.weatherStreaming
 
 import akka.actor.typed.Behavior
 import akka.actor.typed.scaladsl.{AbstractBehavior, ActorContext, Behaviors}
@@ -15,6 +15,7 @@ class producerWeather(context: ActorContext[String]) extends AbstractBehavior [S
         val firstRef = context.spawn(cityWeather(), "first-actor1")
         firstRef ! "getdata"
         this
+      case _ => Behavior.stopped
     }
   }
 }
