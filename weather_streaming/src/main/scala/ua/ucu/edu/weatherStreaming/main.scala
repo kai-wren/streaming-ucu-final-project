@@ -7,10 +7,12 @@ object main extends App {
   system ! producerWeather.Start()
 //  system ! producerWeather.Stop()
 
+
+// for tests of API:
 //  val responds = WeatherAPI.getWeatherApi("Lviv")
 //  println(responds)
 //
-//  val parced = WeatherAPI.parseJson(responds)
+//  val parced = WeatherAPI.parseAirJson(responds)
 //  println(parced)
 
 

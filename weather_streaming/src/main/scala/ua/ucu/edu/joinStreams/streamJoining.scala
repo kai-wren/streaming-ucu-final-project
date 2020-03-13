@@ -2,7 +2,9 @@ package ua.ucu.edu.joinStreams
 
 import java.util.Properties
 
+import org.apache.kafka.streams.kstream.Joined
 import org.apache.kafka.streams.scala.ImplicitConversions._
+import org.apache.kafka.streams.scala.Serdes
 import org.apache.kafka.streams.scala.Serdes._
 
 import scala.util.parsing.json.JSON
@@ -36,7 +38,7 @@ class streamJoining{
       //      val jsonAqi = write(resultAqi)
       val result = JSON.parseFull(v)
       result match {
-        case Some(map: Map[String, Any]) => (map("city").toString, //assign city as key
+        case Some(map: Map[String, Any]) => (map("name").toString, //assign city as key
           Option(map("value")) match { //assign value based on "value" attribute of input JSON
             case Some(v) => map("value").toString
             case None => "null"
@@ -50,13 +52,13 @@ class streamJoining{
       //    val jsonWeather = write(resultWeather)
       val result = JSON.parseFull(v)
       result match {
-        case Some(map: Map[String, Any]) => (map("city").toString, map("temp").toString) // creating new key as user ID and value as page ID
+        case Some(map: Map[String, Any]) => (map("name").toString, map("temp").toString) // creating new key as user ID and value as page ID
         case None => ("null", "null")
       }
     }).groupByKey.reduce((v1, v2)=> v2)
 
-    //    val joined = processedAqiStream.leftJoin(processWeatherStream)((lV: String, rV: String) => rV)(Joined.keySerde(Serdes.String).withValueSerde(Serdes.String))
-    //    joined.to("aqi-weather-joined")
+        val joined = processedAqiStream.leftJoin(processWeatherStream)((lV: String, rV: String) => rV)(Joined.keySerde(Serdes.String).withValueSerde(Serdes.String))
+        joined.to("aqi-weather-joined")
     builder.build()
   }
 }

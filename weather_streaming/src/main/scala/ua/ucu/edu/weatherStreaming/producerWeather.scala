@@ -15,7 +15,7 @@ import ua.ucu.edu.weatherStreaming.producerWeather.{Response, Start, Stop}
 
 //class producerWeather2(context: ActorContext[Command]) extends AbstractBehavior [Command]{
 //  val respondTemp = context.messageAdapter(Response.apply)
-//  val topic = "aqi-weather-streaming"
+//  val airDataTopic = "aqi-weather-streaming"
 //
 //  override def onMessage(msg: Command): Behavior[Command] = {
 //    msg match{
@@ -34,7 +34,7 @@ import ua.ucu.edu.weatherStreaming.producerWeather.{Response, Start, Stop}
 //        case _ => "None"
 //      }
 //      val temperatureValue = WeatherAPI.parseJson(reading)
-//      weatherKafkaProducer.produceRecord(topic, response.city, temperatureValue.toString())
+//      weatherKafkaProducer.produceRecord(airDataTopic, response.city, temperatureValue.toString())
 //      this
 //
 //    }
@@ -58,7 +58,8 @@ class producerWeather(context: ActorContext[Command]) extends AbstractBehavior[C
 
   private val respondTemperatureAdapter = context.messageAdapter(Response.apply)
 //  private val token = "f84d40a229949596ed1d0748a0cb6e4314b0a74c"
-  private val topic = "aqi-weather-streaming"
+  private val airDataTopic = "aqi-weather-streaming"
+  private val windDataTopic = "aqi-weather-wind-streaming"
   private val cities = List("lviv", "kyiv", "odesa", "zaporizhzhya", "ivano-frankivsk", "dnipro", "rivne", "ternopil",
     "chernivci", "mariupol")
 
@@ -82,8 +83,15 @@ class producerWeather(context: ActorContext[Command]) extends AbstractBehavior[C
       case Some(value) => value
       case None     => "None"
     }
-    val temperatureValue: String = WeatherAPI.parseJson(reading)
-    weatherKafkaProducer.produceRecord(topic, response.city, List(response.city, temperatureValue.toString).mkString(", "))
+
+    val weatherData: String = WeatherAPI.parseJson(reading)
+    val temperatureValue: String = WeatherAPI.parseAirJson(weatherData)
+    weatherKafkaProducer.produceRecord(airDataTopic, response.city, temperatureValue.toString)
+
+
+    val windValue: String = WeatherAPI.parseWindJson(weatherData)
+    weatherKafkaProducer.produceRecord(windDataTopic, response.city, windValue.toString)
+
     this
   }
 
