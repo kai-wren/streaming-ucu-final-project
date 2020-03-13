@@ -11,9 +11,13 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="sbt: com.typesafe.akka:akka-actor_2.12:2.5.20:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-xml_2.12:1.2.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scalap:2.12.8:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scala-compiler:2.12.8:jar" level="project" />
+    <orderEntry type="library" name="sbt: net.liftweb:lift-json_2.12:3.4.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.thoughtworks.paranamer:paranamer:2.8:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest_2.12:3.0.5:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: org.scalactic:scalactic_2.12:3.0.5:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="sbt: org.scala-lang.modules:scala-xml_2.12:1.0.6:jar" level="project" />
     <orderEntry type="library" name="sbt: org.apache.httpcomponents:httpcore:4.4.13:jar" level="project" />
     <orderEntry type="library" name="sbt: org.apache.httpcomponents:httpclient:4.5.12:jar" level="project" />
     <orderEntry type="library" name="sbt: commons-logging:commons-logging:1.2:jar" level="project" />
@@ -55,5 +59,12 @@
     <orderEntry type="library" name="sbt: com.typesafe.akka:akka-protobuf_2.12:2.5.20:jar" level="project" />
     <orderEntry type="library" name="sbt: com.typesafe.akka:akka-cluster_2.12:2.5.20:jar" level="project" />
     <orderEntry type="library" name="sbt: com.typesafe.akka:akka-actor-typed_2.12:2.5.20:jar" level="project" />
+    <orderEntry type="library" name="sbt: javax.ws.rs:javax.ws.rs-api:2.1.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.kafka:connect-api:2.0.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.kafka:connect-json:2.0.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.kafka:kafka-streams:2.0.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.apache.kafka:kafka-streams-scala_2.12:2.0.1:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.apache.kafka:kafka-streams-test-utils:2.0.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.rocksdb:rocksdbjni:5.7.3:jar" level="project" />
   </component>
 </module>
