@@ -32,22 +32,23 @@ object WeatherAPI {
   def parseAirJson(jsonWeatherString: String): String ={
     implicit val formats = DefaultFormats
     case class AirComponents(name: String, mainWeather: airWeather)
-//    val jsonWeatherString = parseJson(json)
+    case class AirWeatherFlatten(name: String, temp: String,  pressure: String, humidity: String)
     val parsedJson = parse(jsonWeatherString)
     val parsed = parsedJson.extract[AirComponents]
-//    val airItems = List(parsed.temp, parsed.pressure, parsed.humidity)
-    val jsonAirString = write(parsed)
+    val flattenParsed = AirWeatherFlatten(parsed.name, parsed.mainWeather.temp, parsed.mainWeather.pressure, parsed.mainWeather.humidity)
+    val jsonAirString = write(flattenParsed)
     jsonAirString
   }
 
   def parseWindJson(jsonWeatherString: String): String ={
     implicit val formats = DefaultFormats
     case class WindComponents(name: String, wind: windWeather)
+    case class WindWeatherFlatten(name: String, windSpeed: String, windDeg: String)
 //    val jsonWeatherString = parseJson(json)
     val parsedJson = parse(jsonWeatherString)
     val parsed = parsedJson.extract[WindComponents]
-//        val airItems = List(parsed.speed, parsed.deg)
-    val jsonWindString = write(parsed)
+    val flattenParsed = WindWeatherFlatten(parsed.name, parsed.wind.speed, parsed.wind.deg)
+    val jsonWindString = write(flattenParsed)
     jsonWindString
   }
 }
