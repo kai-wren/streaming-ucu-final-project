@@ -2,7 +2,7 @@ package ua.ucu.edu
 
 import net.liftweb.json._
 
-object getAQI {
+object helperAQI {
   def getAqi(token: String, city: String): String ={
     val url = "https://api.waqi.info/feed/" + city + "/?token=" + token
     val result = scala.io.Source.fromURL(url).mkString
