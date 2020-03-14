@@ -25,7 +25,7 @@ class deviceAQI(context: ActorContext[Command], city: String)
         while(true) {
           val response = getAQI.getAqi(token, city)
           replyTo ! RespondTemperature(city, Option(response))
-          Thread.sleep(10000)
+          Thread.sleep(20000)
         }
         this
     }

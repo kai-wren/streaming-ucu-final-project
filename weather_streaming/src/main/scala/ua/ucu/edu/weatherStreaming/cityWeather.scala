@@ -15,7 +15,6 @@ object cityWeather {
 
 class cityWeather(context: ActorContext[Command], city: String) extends AbstractBehavior[Command] {
 
-
   override def onMessage(msg: Command): Behavior[Command] =
     msg match {
       case  ReadTemp(city,reply) =>
@@ -23,7 +22,7 @@ class cityWeather(context: ActorContext[Command], city: String) extends Abstract
 //          val weather = new WeatherAPI().getWeatherApi(city)
           val weather = WeatherAPI.getWeatherApi(city)
           reply ! RespondTemp(city, Option(weather))
-          Thread.sleep(10000)
+          Thread.sleep(60000)
         }
         this
 

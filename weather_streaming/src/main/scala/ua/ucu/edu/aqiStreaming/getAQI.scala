@@ -20,9 +20,12 @@ object getAQI {
     val parsed = parse(json)
     println(parsed)
     val m = parsed.extract[row]
+//    val jsonAirString = write(m)
+//    jsonAirString
 
 //    List(m.data.city.name, m.data.aqi)
 
     m.data.aqi
+
   }
 }
