@@ -15,19 +15,17 @@ import org.apache.kafka.streams.{KafkaStreams, StreamsConfig, Topology}
 
 
 class streamJoining{
-  case class AirComponents( temp: String, pressure: String, humidity: String)
+  case class AirComponents(name: String, temp: String, pressure: String, humidity: String)
   case class AirWeatherClass(name: String, mainWeather: AirComponents)
   case class CityClass(name: String)
   case class JoinedAqiAir(city: String, aqi: String, temp: String, pressure: String, humidity: String)
-  case class WindComponents(speed: String, deg: String)
+  case class WindComponents(windSpeed: String, windDeg: String)
   case class WindWeatherClass(wind:WindComponents)
   case class JoinedAqiAirWindClass(city: String, aqi: String, temp: String, pressure: String, humidity: String, windSpeed: String, windDeg: String)
 
   def consumeStreams(): Topology = {
     val builder = new StreamsBuilder
-    // data from aqi-streaming topic
     val aqiStream: KStream[String, String] = builder.stream[String, String]("aqi-streaming")
-    // data from aqi-weather-streaming topic
     val airStream: KStream[String, String] = builder.stream[String, String]("aqi-weather-streaming")
     val windStream: KStream[String, String] = builder.stream[String, String]("aqi-weather-wind-streaming")
 
@@ -35,18 +33,12 @@ class streamJoining{
 
       implicit val formats = DefaultFormats
       val parsedAir = parse(rV) // parse airStream data
-
-      val parserAirJson = parsedAir.extract[AirWeatherClass] // extract Air components (temp, pressure, humidity)
-      val parsedCity = parsedAir.extract[CityClass]           // extract
-      val joinedData = JoinedAqiAir(parsedCity.name, lV, parserAirJson.mainWeather.temp, parserAirJson.mainWeather.pressure, parserAirJson.mainWeather.humidity)
+      val parserAirJson = parsedAir.extract[AirComponents] // extract Air components (temp, pressure, humidity)
+      val joinedData = JoinedAqiAir(parserAirJson.name, lV, parserAirJson.temp, parserAirJson.pressure, parserAirJson.humidity)
       val joinedStringData = write(joinedData)
       joinedStringData
-
     },
-      windows = JoinWindows.of(20000))//.to("aqi-weather-joined")
-
-//
-//    val firstJoinedStream: KStream[String, String] = builder.stream[String, String]("aqi-weather-joined")
+      windows = JoinWindows.of(10000))
 
     val joinedAqiAirWind = joinedAqiAir.join(windStream)((lV: String, rV: String) => {
       implicit val formats = DefaultFormats
@@ -54,17 +46,14 @@ class streamJoining{
       val parsedWind = parse(rV)    // Wind Weather
 
       val parsedAqiAirJson = parsedAqiAir.extract[JoinedAqiAir]
-      val parsedWindJson = parsedWind.extract[WindWeatherClass]
-      val parsedCity = parsedWind.extract[CityClass]
-      val joinedData = JoinedAqiAirWindClass(parsedCity.name,parsedAqiAirJson.aqi,
+      val parsedWindJson = parsedWind.extract[WindComponents]
+      val joinedData = JoinedAqiAirWindClass(parsedAqiAirJson.city,parsedAqiAirJson.aqi,
         parsedAqiAirJson.temp, parsedAqiAirJson.pressure, parsedAqiAirJson.humidity,
-        parsedWindJson.wind.speed, parsedWindJson.wind.deg)
+        parsedWindJson.windSpeed, parsedWindJson.windDeg)
       val joinedStringData = write(joinedData)
       println(joinedStringData)
       joinedStringData
-    }, windows = JoinWindows.of(20000)).to("aqi-weather-joined")
-
-
+    }, windows = JoinWindows.of(10000)).to("aqi-weather-joined")
 
     builder.build()
   }
