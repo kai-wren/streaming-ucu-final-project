@@ -6,7 +6,8 @@ import pickle
 
 
 consumer = KafkaConsumer('aqi-weather-joined', auto_offset_reset='earliest',
-                                     bootstrap_servers=['localhost:9092'], enable_auto_commit=True,
+                                     bootstrap_servers=['10.0.1.171:9092','10.0.0.154:9092','10.0.2.72:9092'], 
+                                     enable_auto_commit=True,
                                      value_deserializer=lambda x: loads(x.decode('utf-8')))
         
 data = []
