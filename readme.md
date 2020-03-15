@@ -1,5 +1,6 @@
 # Project description
 Dmytro Babchuk, Mykhailo Manukian, Sevil Smailova
+
 Short description of the project:
 
 
