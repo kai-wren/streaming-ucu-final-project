@@ -122,3 +122,15 @@ lazy val weather_streaming = (project in file("weather_streaming"))
     ),
     dockerSettings()
   )
+
+lazy val aqi_weather_streaming_app = (project in file("aqi_weather_streaming_app"))
+  .enablePlugins(sbtdocker.DockerPlugin)
+  .settings(
+    name := "aqi_weather_streaming_app",
+    libraryDependencies ++= commonDependencies ++ akkaDependencies ++ streamsDependencies ++ Seq(
+      "org.apache.httpcomponents" % "httpclient" % "4.5.12",
+      "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
+      "net.liftweb" %% "lift-json" % "3.4.0"
+    ),
+    dockerSettings()
+  )
