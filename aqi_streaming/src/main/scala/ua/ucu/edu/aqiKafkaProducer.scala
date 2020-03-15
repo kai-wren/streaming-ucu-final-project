@@ -14,6 +14,8 @@ object aqiKafkaProducer{ //defining kafka producer object for AQI data
     "org.apache.kafka.common.serialization.StringSerializer")
   props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, // value serializer
     "org.apache.kafka.common.serialization.StringSerializer")
+  props.put(ProducerConfig.CLIENT_ID_CONFIG, "aqi_provider")
+  props.put("application.id", "aqi_streaming")
   val producer = new KafkaProducer[String, String](props) // creating new producer
 
 
