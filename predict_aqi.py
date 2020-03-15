@@ -21,5 +21,5 @@ for message in consumer:
     data.append(values)
     df = pd.DataFrame(data)
     predicted = model.predict(df[['temp', 'pressure', 'humidity', 'windSpeed', 'windDeg']])
-    data = {"Predicted": predicted[0], "True": df.aqi[0]}
+    data = {"City": df.city[0], "Predicted": predicted[0], "True": df.aqi[0]}
     producer.send('aqi-predict', value=data, key=message.key)
