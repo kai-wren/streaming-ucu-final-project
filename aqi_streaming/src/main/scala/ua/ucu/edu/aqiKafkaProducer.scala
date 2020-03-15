@@ -6,8 +6,10 @@ import org.apache.kafka.clients.producer.{Callback, KafkaProducer, ProducerConfi
 
 object aqiKafkaProducer{ //defining kafka producer object for AQI data
 
+  val BrokerList: String = System.getenv("KAFKA_BROKERS")
+
   val props:Properties = new Properties() //defining producer properties and configurations
-  props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,"localhost:9092") //broker host and port
+  props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BrokerList) //broker host and port
   props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, // key serializer
     "org.apache.kafka.common.serialization.StringSerializer")
   props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, // value serializer
