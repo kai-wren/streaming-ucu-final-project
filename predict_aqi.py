@@ -5,7 +5,7 @@ import pickle
 
 consumer = KafkaConsumer('json-test1', auto_offset_reset='earliest',
                              bootstrap_servers=['localhost:9092'],
-                         consumer_timeout_ms=1000, value_deserializer=lambda x: loads(x.decode('utf-8')))
+                             value_deserializer=lambda x: loads(x.decode('utf-8')))
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          key_serializer=lambda x: bytes(str(x), encoding='utf-8'),
@@ -18,10 +18,8 @@ with open(filename, 'rb') as file:
 for message in consumer:
     data=[]
     values = message.value
-    values['city'] = message.key
-    print(message.key)
     data.append(values)
     df = pd.DataFrame(data)
-    predicted = model.predict(df[['temp', 'wind']])
+    predicted = model.predict(df[['temp', 'pressure', 'humidity', 'windSpeed', 'windDeg']])
     data = {"Predicted": predicted[0], "True": df.aqi[0]}
     producer.send('aqi-predict', value=data, key=message.key)
