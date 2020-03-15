@@ -1,3 +1,11 @@
+# Project description
+
+Short description of the project:
+
+The idea of our project is to predict an air quality index (AQI) for 10 Ukrainian cities. We assume that there is a certain level of different gas emissions and other factors that influence an air quality index. We assume those factors more or less constant and would like to try to predict AQI based on weather conditions, which also influence AQI.
+
+To do this, we first collect real AQI data (data source 1) from open API https://aqicn.org and enrich it with air metrics data (data source 2) and wind metrics data (data source 3). Data from all three data sources merged together and written to another topic. Later we have two python scripts that consume joined topic. One python script intention is to train a linear regression model based on collected data. Another python script uses the trained model to predict AQI values based on air and wind metrics and writes a result into a final topic.
+
 # Streaming course final project assignment
 
 Base project for a final assignment, contains:
