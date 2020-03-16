@@ -7,9 +7,9 @@ export $(grep -v '^#' .env | xargs)
 
 SERVICE_NAME=$1
 
-if [ "$SERVICE_NAME" != "streaming-app" ] && [ "$SERVICE_NAME" != "weather-provider" ] && [ "$SERVICE_NAME" != "solar-panel-emulator" ]
+if [ "$SERVICE_NAME" != "aqi_streaming-app" ] && [ "$SERVICE_NAME" != "weather_streaming" ] && [ "$SERVICE_NAME" != "aqi_weather_streaming_app" ]
 then
-        echo "should supply name of the service [streaming-app|weather-provider|solar-panel-emulator]";
+        echo "should supply name of the service [aqi_streaming-app|weather_streaming|aqi_weather_streaming_app]";
         exit 1;
 fi
 

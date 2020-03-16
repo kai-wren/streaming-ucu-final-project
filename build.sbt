@@ -67,27 +67,7 @@ envFileName in ThisBuild := ".env"
 
 lazy val root = (project in file("."))
   .settings(name := "streaming-ucu-final-project")
-  .aggregate(solar_panel_emulator, weather_provider, streaming_app)
-
-lazy val solar_panel_emulator = (project in file("solar-panel-emulator"))
-  .enablePlugins(sbtdocker.DockerPlugin)
-  .settings(
-    name := "solar-panel-emulator",
-    libraryDependencies ++= commonDependencies ++ akkaDependencies ++ Seq(
-      // your additional dependencies go here
-    ),
-    dockerSettings()
-  )
-
-lazy val weather_provider = (project in file("weather-provider"))
-  .enablePlugins(sbtdocker.DockerPlugin)
-  .settings(
-    name := "weather-provider",
-    libraryDependencies ++= commonDependencies ++ akkaDependencies ++ Seq(
-      // your additional dependencies go here
-    ),
-    dockerSettings()
-  )
+  .aggregate(aqi_streaming, weather_streaming, aqi_weather_streaming_app)
 
 lazy val aqi_streaming = (project in file("aqi_streaming"))
   .enablePlugins(sbtdocker.DockerPlugin)
@@ -100,20 +80,9 @@ lazy val aqi_streaming = (project in file("aqi_streaming"))
       "org.slf4j" % "slf4j-log4j12" % "1.7.29",
       "org.slf4j" % "slf4j-simple" % "1.7.29"
     ),
-    dockerSettings()
-  )
-
-lazy val streaming_app = (project in file("streaming-app"))
-  .enablePlugins(sbtdocker.DockerPlugin)
-  .settings(
-    name := "streaming-app",
-    libraryDependencies ++= commonDependencies ++ streamsDependencies ++ Seq(
-      // your additional dependencies go here
-
-    ),
     dockerSettings(),
-    mainClass in assembly := Some("ua.ucu.edu.DummyStreamingApp")
-  )
+    mainClass in assembly := Some("ua.ucu.edu.Main")
+)
 
 lazy val weather_streaming = (project in file("weather_streaming"))
   .enablePlugins(sbtdocker.DockerPlugin)
@@ -124,7 +93,8 @@ lazy val weather_streaming = (project in file("weather_streaming"))
       "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
       "net.liftweb" %% "lift-json" % "3.4.0"
     ),
-    dockerSettings()
+    dockerSettings(),
+    mainClass in assembly := Some("ua.ucu.edu.weatherStreaming.main")
   )
 
 lazy val aqi_weather_streaming_app = (project in file("aqi_weather_streaming_app"))
@@ -136,5 +106,6 @@ lazy val aqi_weather_streaming_app = (project in file("aqi_weather_streaming_app
       "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
       "net.liftweb" %% "lift-json" % "3.4.0"
     ),
-    dockerSettings()
+    dockerSettings(),
+    mainClass in assembly := Some("ua.ucu.edu.main")
   )
